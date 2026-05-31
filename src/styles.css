@@ -1,0 +1,37 @@
+/*
+ * opus-ui base styles. Optional — components are fully styled without this
+ * file. Import it for nice defaults (background, body font, selection,
+ * keyboard focus ring).
+ *
+ *   import 'opus-ui/styles.css';
+ */
+@import './tokens.css';
+
+html,
+body {
+    background: var(--opus-bg-gradient);
+    background-attachment: fixed;
+    color: var(--opus-fg);
+    font-family: var(--opus-font);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+    background: color-mix(in srgb, var(--opus-accent) 40%, transparent);
+    color: var(--opus-fg);
+}
+
+/* Hide focus rings for mouse users, keep them for keyboard / D-pad. */
+:where(button, a, [tabindex]):focus {
+    outline: none;
+}
+:where(button, a, [tabindex]):focus-visible {
+    outline: 2px solid var(--opus-accent);
+    outline-offset: 3px;
+    border-radius: var(--opus-radius-sm);
+}
+
+/* Tiny utilities used by some components — namespaced under .ou-. */
+.ou-text-balance { text-wrap: balance; }
+.ou-text-pretty  { text-wrap: pretty; }

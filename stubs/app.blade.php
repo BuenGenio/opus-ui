@@ -1,0 +1,32 @@
+{{-- ─────────────────────────────────────────────────────────────────────
+     Example Inertia blade entry for projects using opus-ui.
+
+     Drop this at resources/views/app.blade.php (replace the default).
+     Pairs with the Vite + Tailwind configs in this `stubs/` directory.
+     ───────────────────────────────────────────────────────────────────── --}}
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+    <head>
+        <meta charset="utf-8">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#070b18">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+        <link rel="icon" href="{{ url('/favicon.ico') }}" sizes="any">
+
+        <title inertia>{{ config('app.name', 'App') }}</title>
+
+        {{-- Bunny CDN for Figtree (the default opus-ui font). Swap or remove freely. --}}
+        <link rel="preconnect" href="https://fonts.bunny.net">
+        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700,800,900&display=swap" rel="stylesheet" />
+
+        @routes
+        @vite(['resources/js/app.ts', "resources/js/Pages/{$page['component']}.vue"])
+        @inertiaHead
+    </head>
+    <body class="antialiased">
+        @inertia
+    </body>
+</html>

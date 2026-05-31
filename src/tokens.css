@@ -1,0 +1,73 @@
+/*
+ * opus-ui design tokens.
+ *
+ * Every visual choice in the bundled components reads from these CSS
+ * variables, so re-theming is just a matter of overriding them. Import this
+ * file once at your app entry (after Tailwind base if you use it):
+ *
+ *   import 'opus-ui/tokens.css';
+ */
+
+:root {
+    /* ── Surfaces ────────────────────────────────────────────────────── */
+    --opus-bg: #070b18;
+    --opus-bg-gradient:
+        radial-gradient(ellipse 80% 50% at 50% -10%, rgba(99, 102, 241, 0.25), transparent),
+        radial-gradient(ellipse 60% 50% at 90% 110%, rgba(236, 72, 153, 0.16), transparent),
+        #070b18;
+    --opus-surface: rgba(255, 255, 255, 0.06);
+    --opus-surface-hover: rgba(255, 255, 255, 0.09);
+    --opus-border: rgba(255, 255, 255, 0.1);
+    --opus-border-strong: rgba(255, 255, 255, 0.18);
+
+    /* ── Foreground ─────────────────────────────────────────────────── */
+    --opus-fg: #ffffff;
+    --opus-fg-muted: rgba(255, 255, 255, 0.62);
+    --opus-fg-dim: rgba(255, 255, 255, 0.42);
+
+    /* ── Accent (override per page/section via --opus-accent) ───────── */
+    --opus-accent: #6366f1;
+    --opus-accent-fg: #ffffff;
+
+    /* ── Semantic state ─────────────────────────────────────────────── */
+    --opus-success: #34d399;
+    --opus-warning: #fbbf24;
+    --opus-danger: #f87171;
+    --opus-info: #38bdf8;
+
+    /* ── Radii ──────────────────────────────────────────────────────── */
+    --opus-radius-sm: 0.6rem;
+    --opus-radius-md: 0.95rem;
+    --opus-radius-lg: 1.35rem;
+
+    /* ── Typography ─────────────────────────────────────────────────── */
+    --opus-font: 'Figtree', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+        Roboto, 'Helvetica Neue', Arial, sans-serif;
+    --opus-font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+    /* ── Effects ────────────────────────────────────────────────────── */
+    --opus-glow: 0 0 28px color-mix(in srgb, var(--opus-accent) 45%, transparent);
+    --opus-glow-strong:
+        0 0 0 4px color-mix(in srgb, var(--opus-accent) 28%, transparent),
+        0 0 28px color-mix(in srgb, var(--opus-accent) 45%, transparent);
+    --opus-transition: 150ms;
+}
+
+/*
+ * Optional light theme — apply by adding the .opus-light class on any
+ * ancestor (e.g. <body class="opus-light">). Tokens cascade automatically.
+ */
+.opus-light {
+    --opus-bg: #f8fafc;
+    --opus-bg-gradient:
+        radial-gradient(ellipse 80% 50% at 50% -10%, rgba(99, 102, 241, 0.12), transparent),
+        radial-gradient(ellipse 60% 50% at 90% 110%, rgba(236, 72, 153, 0.08), transparent),
+        #f8fafc;
+    --opus-surface: rgba(15, 23, 42, 0.04);
+    --opus-surface-hover: rgba(15, 23, 42, 0.07);
+    --opus-border: rgba(15, 23, 42, 0.12);
+    --opus-border-strong: rgba(15, 23, 42, 0.22);
+    --opus-fg: #0f172a;
+    --opus-fg-muted: rgba(15, 23, 42, 0.65);
+    --opus-fg-dim: rgba(15, 23, 42, 0.45);
+}
