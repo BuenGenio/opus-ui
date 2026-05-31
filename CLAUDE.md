@@ -145,6 +145,15 @@ import { Link } from '@inertiajs/vue3'; // or RouterLink / 'a'
 | `<OCardGrid>` | Mobile-first responsive grid | `cols` (`{base,sm,md,lg,xl}`), `gap` |
 | `<OCardLink>` | Clickable card with icon + body + cta | `href`, `as`, `accent`, `focused`, `emoji`, `external` |
 
+### Data & status
+
+| Component | Purpose | Key props |
+| --- | --- | --- |
+| `<OEmptyState>` | "Nothing here yet" placeholder for empty lists / search results | `title`, `description`, `action`, `accent`; emits `action`; `icon` slot |
+| `<OScoreCard>` | KPI card — big number + label + optional trend delta | `label`, `value`, `trend`, `color`, `accent`; `footer` slot |
+| `<OPriorityBadge>` | Dot + label for priority levels (`low`/`medium`/`high`/`critical`) | `priority`, `label` |
+| `<OStatusBadge>` | Maps a status string (e.g. `in_progress`, `paused`, `resolved`) to a semantic OBadge variant | `status`, `size`, `mapping` |
+
 ### Notifications
 
 | Component / Composable | Purpose |
