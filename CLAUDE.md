@@ -117,9 +117,12 @@ import { Link } from '@inertiajs/vue3'; // or RouterLink / 'a'
 
 | Component | Purpose | Key props |
 | --- | --- | --- |
-| `<OPageShell>` | Page-level wrapper | `accent`, `glow`, `fullscreen`, `maxWidth`, `padded` |
+| `<OPageShell>` | **Outer** page wrapper (animated bg, top bar slot, sidebar slot) | `accent`, `glow`, `fullscreen`, `maxWidth`, `padded` |
+| `<OPageScaffold>` | **Inner** content scaffold (centered max-width + rounded card; `bare` for full-bleed) | `bare`, `maxWidth`, `padded`, `accent` |
 | `<OTopBar>` | Top navigation bar with brand/nav/actions slots | `sticky`, `bordered`, `blur` |
 | `<OSidebar>` | Collapsible side rail with header/body/footer slots | `v-model:open`, `width`, `position` |
+
+> **OPageShell vs OPageScaffold** — `OPageShell` is the outer chrome (background, top bar, optional sidebar). `OPageScaffold` is the inner content container: a max-width-centered card that goes inside `OPageShell`'s default slot for narrative pages (settings, forms, profile, articles). Use `<OPageScaffold bare>` when you want centered max-width without the card chrome (dashboards, kanbans, full-bleed lists). Many pages skip `OPageScaffold` entirely and let `OPageShell`'s `maxWidth` + `padded` props do the job — reach for `OPageScaffold` when you want the explicit "content card" visual separation.
 
 ### Primitives
 

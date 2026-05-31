@@ -74,10 +74,10 @@ That's the whole API — pick a page pattern, drop in components.
 
 | Layout | Primitives | Navigation | Notifications |
 | --- | --- | --- | --- |
-| `OPageShell` | `OCard` | `OMenu` (vertical / horizontal) | `OToastViewport` |
-| `OTopBar` | `OButton` | `OMenuItem` | `useToast()` |
-| `OSidebar` | `OHeading` | `ODropdown` | |
-| | `OText` | `OCardGrid` | |
+| `OPageShell` (outer) | `OCard` | `OMenu` (vertical / horizontal) | `OToastViewport` |
+| `OPageScaffold` (inner) | `OButton` | `OMenuItem` | `useToast()` |
+| `OTopBar` | `OHeading` | `ODropdown` | |
+| `OSidebar` | `OText` | `OCardGrid` | |
 | | `OBadge` | `OCardLink` | |
 | | `ODivider` | | |
 

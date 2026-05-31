@@ -17,6 +17,7 @@ export { default as ODropdown } from './components/ODropdown.vue';
 export { default as OHeading } from './components/OHeading.vue';
 export { default as OMenu } from './components/OMenu.vue';
 export { default as OMenuItem } from './components/OMenuItem.vue';
+export { default as OPageScaffold } from './components/OPageScaffold.vue';
 export { default as OPageShell } from './components/OPageShell.vue';
 export { default as OSidebar } from './components/OSidebar.vue';
 export { default as OText } from './components/OText.vue';
