@@ -60,6 +60,7 @@ const isNativeButton = renderedAs === 'button';
         :is="renderedAs"
         ref="el"
         :href="href"
+        @click="$emit('click', $event)"
         :type="isNativeButton ? type : undefined"
         :disabled="isNativeButton ? disabled || loading : undefined"
         :aria-disabled="disabled || loading || undefined"
