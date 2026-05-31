@@ -41,13 +41,17 @@ For Laravel + Inertia projects, the package ships ready-made stubs at `node_modu
 
 ---
 
-## 3. Page anatomy
+## 3. Page anatomy — top horizontal menu is the default
 
-Every page in an opus-ui project has the same outer shape. Use it as the default starting point unless asked otherwise:
+Every page in an opus-ui project has the same outer shape. **Default nav pattern: a top `<OTopBar>` with a horizontal `<OMenu>` for primary links and an `<ODropdown>` for the user / account menu.** Reach for `<OSidebar>` only when the user explicitly asks for it (deep IA, settings-style apps, kiosks).
 
 ```vue
 <script setup lang="ts">
-import { OPageShell, OTopBar, OHeading, OText, OCardGrid } from 'opus-ui';
+import {
+  OPageShell, OTopBar, OMenu, OMenuItem,
+  ODropdown, ODivider, OButton,
+  OHeading, OText, OCardGrid,
+} from 'opus-ui';
 import { Link } from '@inertiajs/vue3'; // or RouterLink / 'a'
 </script>
 
@@ -55,9 +59,32 @@ import { Link } from '@inertiajs/vue3'; // or RouterLink / 'a'
   <OPageShell accent="#6366f1">
     <template #bar>
       <OTopBar>
-        <template #brand><strong class="text-xl">⚡ AppName</strong></template>
+        <template #brand>
+          <strong class="text-xl">⚡ AppName</strong>
+        </template>
+
+        <!-- Primary nav: a horizontal OMenu -->
+        <template #nav>
+          <OMenu orientation="horizontal" aria-label="Primary">
+            <OMenuItem :as="Link" href="/dashboard">Dashboard</OMenuItem>
+            <OMenuItem :as="Link" href="/projects">Projects</OMenuItem>
+            <OMenuItem :as="Link" href="/team">Team</OMenuItem>
+          </OMenu>
+        </template>
+
+        <!-- Right rail: user / account dropdown -->
         <template #actions>
-          <!-- auth links etc. -->
+          <ODropdown placement="bottom-end" aria-label="Account">
+            <template #trigger="{ open, toggle }">
+              <OButton variant="ghost" @click="toggle">
+                ⚙ {{ user.name }} {{ open ? '▴' : '▾' }}
+              </OButton>
+            </template>
+            <OMenuItem :as="Link" href="/settings" icon="⚙">Settings</OMenuItem>
+            <OMenuItem :as="Link" href="/billing"  icon="💳">Billing</OMenuItem>
+            <ODivider />
+            <OMenuItem icon="🚪" @click="logout">Sign out</OMenuItem>
+          </ODropdown>
         </template>
       </OTopBar>
     </template>
@@ -78,8 +105,9 @@ import { Link } from '@inertiajs/vue3'; // or RouterLink / 'a'
 
 **Why this shape:**
 - `<OPageShell>` provides the animated dark gradient + glow + grid background and handles `min-height: 100vh` (or `fixed inset-0` when `fullscreen` is set, for game / kiosk pages).
-- Slots (`bar`, `sidebar`, default, `footer`) are all optional — empty slots render nothing.
+- All slots (`bar`, `sidebar`, default, `footer`) are optional — empty slots render nothing.
 - The `accent` prop sets `--ou-accent` for the whole shell; descendants that opt in (OButton, OCardLink, etc.) glow in that colour on hover/focus.
+- `<OMenu orientation="horizontal">` swaps the active-state side rail for a bottom underline so it reads as proper top-bar nav.
 
 ---
 
@@ -102,13 +130,15 @@ import { Link } from '@inertiajs/vue3'; // or RouterLink / 'a'
 | `<OHeading>` | Semantic heading with display sizes | `level` (1-6 tag), `size` ('hero'\|'h1'..'h5'), `glow`, `balance` |
 | `<OText>` | Body copy variants | `size`, `variant` ('default'\|'muted'\|'dim'\|'mono'\|'lead'), `as` |
 | `<OBadge>` | Inline status / category chip | `variant`, `size`, `accent` |
+| `<ODivider>` | Hairline rule (horizontal or vertical) | `vertical`, `spacing` |
 
 ### Navigation
 
 | Component | Purpose | Key props |
 | --- | --- | --- |
-| `<OMenu>` | Vertical menu container | `as`, `ariaLabel` |
+| `<OMenu>` | Menu container — vertical (default) or horizontal | `orientation` ('vertical'\|'horizontal'), `as`, `ariaLabel` |
 | `<OMenuItem>` | Menu row with icon + label + active state | `href`, `as`, `active`, `focused`, `icon`, `accent` |
+| `<ODropdown>` | Click-to-open popover menu (user menu, action menu, …) | `placement` ('bottom-end' default), `open` (v-model), `offset`, `closeOnItemClick`, `minWidth` |
 | `<OCardGrid>` | Mobile-first responsive grid | `cols` (`{base,sm,md,lg,xl}`), `gap` |
 | `<OCardLink>` | Clickable card with icon + body + cta | `href`, `as`, `accent`, `focused`, `emoji`, `external` |
 
@@ -171,7 +201,52 @@ Use these as templates. Adapt the content; keep the structure.
 </template>
 ```
 
-### 5.2 Dashboard with sidebar
+### 5.2 Dashboard (top horizontal menu — preferred default)
+
+```vue
+<template>
+  <OPageShell accent="#6366f1">
+    <template #bar>
+      <OTopBar>
+        <template #brand><strong>⚡ AppName</strong></template>
+        <template #nav>
+          <OMenu orientation="horizontal" aria-label="Primary">
+            <OMenuItem :as="Link" href="/" :active="$page.url === '/'">Home</OMenuItem>
+            <OMenuItem :as="Link" href="/tasks" :active="$page.url === '/tasks'">Tasks</OMenuItem>
+            <OMenuItem :as="Link" href="/insights" :active="$page.url === '/insights'">Insights</OMenuItem>
+          </OMenu>
+        </template>
+        <template #actions>
+          <ODropdown placement="bottom-end" aria-label="Account">
+            <template #trigger="{ open, toggle }">
+              <OButton variant="ghost" @click="toggle">
+                ⚙ {{ user.name }} {{ open ? '▴' : '▾' }}
+              </OButton>
+            </template>
+            <OMenuItem :as="Link" href="/settings" icon="⚙">Settings</OMenuItem>
+            <OMenuItem :as="Link" href="/billing"  icon="💳">Billing</OMenuItem>
+            <ODivider />
+            <OMenuItem icon="🚪" @click="logout">Sign out</OMenuItem>
+          </ODropdown>
+        </template>
+      </OTopBar>
+    </template>
+
+    <OHeading level="1" size="h1">Dashboard</OHeading>
+    <OText variant="muted">An overview of your activity.</OText>
+
+    <OCardGrid class="mt-6" :cols="{ base: 1, sm: 2, lg: 4 }">
+      <OCard v-for="s in stats" :key="s.label" :accent="s.accent">
+        <OHeading level="3" size="h5">{{ s.label }}</OHeading>
+        <p class="font-mono text-3xl font-black mt-1">{{ s.value }}</p>
+        <OText variant="dim" size="xs" class="mt-1">{{ s.delta }}</OText>
+      </OCard>
+    </OCardGrid>
+  </OPageShell>
+</template>
+```
+
+### 5.3 Dashboard with sidebar (alternate — for deep IA or kiosk layouts)
 
 ```vue
 <template>
@@ -205,7 +280,7 @@ Use these as templates. Adapt the content; keep the structure.
 </template>
 ```
 
-### 5.3 Hub / launcher (the OpusOS Games arcade pattern)
+### 5.4 Hub / launcher (the OpusOS Games arcade pattern)
 
 ```vue
 <script setup lang="ts">
@@ -249,7 +324,7 @@ useTvRemote((key) => {
 </template>
 ```
 
-### 5.4 Detail / settings page
+### 5.5 Detail / settings page
 
 ```vue
 <template>
@@ -335,6 +410,7 @@ The complete token surface (defined in `src/tokens.css`):
 ### DO
 
 - ✅ **Always start a page with `<OPageShell>`.** Don't roll your own background gradient.
+- ✅ **Default top-level navigation to a horizontal `<OMenu orientation="horizontal">` in `<OTopBar>`** + an `<ODropdown>` for the user/account menu. That's the canonical opus-ui pattern. `<OSidebar>` is for deep IA / kiosk layouts — use it only when explicitly asked.
 - ✅ **Use `<OHeading level=… size=…>` not bare `<h1>`** — `level` is for semantics, `size` for visual scale, and they're independent so `<h1 size="h5">` is fine when SEO needs an h1 but visually it's a label.
 - ✅ **Use `<OText variant="lead">` for the one-sentence intro under a page heading.**
 - ✅ **Pass `:as="Link"`** (from `@inertiajs/vue3`) on any clickable component when in an Inertia app — that's what makes navigation SPA-fast. Vue Router projects pass `RouterLink`.
@@ -347,6 +423,8 @@ The complete token surface (defined in `src/tokens.css`):
 
 - ❌ **Don't hardcode colours** in component code (`color: #fff`). Use tokens: `color: var(--opus-fg)`.
 - ❌ **Don't write your own card div** — use `<OCard>` or `<OCardLink>` so the styling stays consistent.
+- ❌ **Don't reach for `<OSidebar>` reflexively** for new pages. The horizontal top-bar nav is the default; sidebars are for genuinely deep IA.
+- ❌ **Don't build a hand-rolled menu popover.** Use `<ODropdown>` — outside-click close, Escape, arrow-key nav and focus return to trigger are all wired up.
 - ❌ **Don't bypass `<OPageShell>`** with a top-level `<div class="bg-…">`. The shell handles the animated background and z-index layering.
 - ❌ **Don't use `<button @click="$inertia.visit(...)">`** for nav — use `<OCardLink :as="Link" :href="...">` or `<OButton :as="Link" :href="...">` so anchors stay anchors (right-click "open in new tab" works, prefetch works, accessibility tree is correct).
 - ❌ **Don't reach into `_subscribeToast`** — it's private. Use `useToast()` and `<OToastViewport>`.

@@ -12,6 +12,8 @@ export { default as OButton } from './components/OButton.vue';
 export { default as OCard } from './components/OCard.vue';
 export { default as OCardGrid } from './components/OCardGrid.vue';
 export { default as OCardLink } from './components/OCardLink.vue';
+export { default as ODivider } from './components/ODivider.vue';
+export { default as ODropdown } from './components/ODropdown.vue';
 export { default as OHeading } from './components/OHeading.vue';
 export { default as OMenu } from './components/OMenu.vue';
 export { default as OMenuItem } from './components/OMenuItem.vue';

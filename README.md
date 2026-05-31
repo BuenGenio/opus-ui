@@ -74,11 +74,12 @@ That's the whole API — pick a page pattern, drop in components.
 
 | Layout | Primitives | Navigation | Notifications |
 | --- | --- | --- | --- |
-| `OPageShell` | `OCard` | `OMenu` | `OToastViewport` |
+| `OPageShell` | `OCard` | `OMenu` (vertical / horizontal) | `OToastViewport` |
 | `OTopBar` | `OButton` | `OMenuItem` | `useToast()` |
-| `OSidebar` | `OHeading` | `OCardGrid` | |
-| | `OText` | `OCardLink` | |
-| | `OBadge` | | |
+| `OSidebar` | `OHeading` | `ODropdown` | |
+| | `OText` | `OCardGrid` | |
+| | `OBadge` | `OCardLink` | |
+| | `ODivider` | | |
 
 Composables: `useTvRemote()` (Smart-TV / D-pad input), `useToast()` (notifications).
 
