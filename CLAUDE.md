@@ -409,11 +409,20 @@ The complete token surface (defined in `src/tokens.css`):
 <OCardLink accent="#34d399" emoji="🌍"> ... </OCardLink>
 ```
 
-**Light theme** — apply `.opus-light` on a parent:
+**Themes** — the default palette is dark. Opt into another built-in theme
+(`light`, `midnight`, `emerald`) on any ancestor, via EITHER a class or a
+`data-theme` attribute — whichever convention your app already uses:
 
 ```html
-<body class="opus-light">…</body>
+<body class="opus-light">…</body>          <!-- class convention -->
+<html data-theme="midnight">…</html>       <!-- attribute convention -->
 ```
+
+Both resolve to the same token overrides, so switching a theme is a single
+class/attribute swap (no per-component work). `midnight` is a cool deep-slate
+dark (blue accent); `emerald` is a deep-green dark (emerald accent). Add your
+own by re-declaring the token surface under a `.opus-<name>` /
+`[data-theme="<name>"]` selector.
 
 ---
 

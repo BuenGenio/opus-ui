@@ -54,10 +54,23 @@
 }
 
 /*
- * Optional light theme — apply by adding the .opus-light class on any
- * ancestor (e.g. <body class="opus-light">). Tokens cascade automatically.
+ * Themes ship as token overrides you opt into on any ancestor element, via
+ * EITHER a class (`.opus-light`) or a `data-theme` attribute
+ * (`data-theme="light"`) — whichever convention your app already uses. Tokens
+ * cascade, so every component re-themes automatically with no per-component
+ * work. Built-in: (default = dark), light, midnight, emerald.
  */
-.opus-light {
+
+/* dark — the default palette (see :root above). Declared so the attribute
+   convention is an explicit no-op rather than inheriting an ancestor's theme. */
+[data-theme='dark'] {
+    color-scheme: dark;
+}
+
+/* light */
+.opus-light,
+[data-theme='light'] {
+    color-scheme: light;
     --opus-bg: #f8fafc;
     --opus-bg-gradient:
         radial-gradient(ellipse 80% 50% at 50% -10%, rgba(99, 102, 241, 0.12), transparent),
@@ -70,4 +83,42 @@
     --opus-fg: #0f172a;
     --opus-fg-muted: rgba(15, 23, 42, 0.65);
     --opus-fg-dim: rgba(15, 23, 42, 0.45);
+}
+
+/* midnight — a cooler, deep-slate dark theme (blue accent) */
+.opus-midnight,
+[data-theme='midnight'] {
+    color-scheme: dark;
+    --opus-bg: #060a15;
+    --opus-bg-gradient:
+        radial-gradient(ellipse 80% 50% at 50% -10%, rgba(59, 130, 246, 0.22), transparent),
+        radial-gradient(ellipse 60% 50% at 90% 110%, rgba(14, 165, 233, 0.14), transparent),
+        #060a15;
+    --opus-surface: rgba(255, 255, 255, 0.05);
+    --opus-surface-hover: rgba(255, 255, 255, 0.08);
+    --opus-border: rgba(148, 163, 184, 0.16);
+    --opus-border-strong: rgba(148, 163, 184, 0.26);
+    --opus-fg: #f1f5f9;
+    --opus-fg-muted: rgba(226, 232, 240, 0.62);
+    --opus-fg-dim: rgba(226, 232, 240, 0.42);
+    --opus-accent: #3b82f6;
+}
+
+/* emerald — a deep-green dark theme (emerald accent) */
+.opus-emerald,
+[data-theme='emerald'] {
+    color-scheme: dark;
+    --opus-bg: #04130d;
+    --opus-bg-gradient:
+        radial-gradient(ellipse 80% 50% at 50% -10%, rgba(16, 185, 129, 0.20), transparent),
+        radial-gradient(ellipse 60% 50% at 90% 110%, rgba(52, 211, 153, 0.12), transparent),
+        #04130d;
+    --opus-surface: rgba(255, 255, 255, 0.05);
+    --opus-surface-hover: rgba(255, 255, 255, 0.08);
+    --opus-border: rgba(167, 243, 208, 0.14);
+    --opus-border-strong: rgba(167, 243, 208, 0.24);
+    --opus-fg: #ecfdf5;
+    --opus-fg-muted: rgba(209, 250, 229, 0.62);
+    --opus-fg-dim: rgba(209, 250, 229, 0.42);
+    --opus-accent: #10b981;
 }
