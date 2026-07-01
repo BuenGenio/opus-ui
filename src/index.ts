@@ -7,11 +7,14 @@
  */
 
 // ── Components ─────────────────────────────────────────────────────────
+export { default as OAsyncSelect } from './components/OAsyncSelect.vue';
 export { default as OBadge } from './components/OBadge.vue';
 export { default as OButton } from './components/OButton.vue';
 export { default as OCard } from './components/OCard.vue';
 export { default as OCardGrid } from './components/OCardGrid.vue';
 export { default as OCardLink } from './components/OCardLink.vue';
+export { default as OConfirmModal } from './components/OConfirmModal.vue';
+export { default as ODetailList } from './components/ODetailList.vue';
 export { default as ODivider } from './components/ODivider.vue';
 export { default as ODrawer } from './components/ODrawer.vue';
 export { default as ODropdown } from './components/ODropdown.vue';
@@ -19,6 +22,7 @@ export { default as OEmptyState } from './components/OEmptyState.vue';
 export { default as OHeading } from './components/OHeading.vue';
 export { default as OMenu } from './components/OMenu.vue';
 export { default as OMenuItem } from './components/OMenuItem.vue';
+export { default as OModal } from './components/OModal.vue';
 export { default as OPageScaffold } from './components/OPageScaffold.vue';
 export { default as OPageShell } from './components/OPageShell.vue';
 export { default as OPriorityBadge } from './components/OPriorityBadge.vue';

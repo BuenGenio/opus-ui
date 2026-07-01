@@ -16,7 +16,7 @@ A small set of Vue 3 + Tailwind-compatible components that compose into the Opus
 
 Everything is themeable via CSS variables (see §6 Theming). Nothing forces Tailwind on you — components use scoped CSS internally — but a `tailwind-preset` is shipped so consumers can layer utility classes on top.
 
-The package is intentionally minimal. It owns the **scaffolding**: page shell, top bar, sidebar, menus, cards, buttons, typography, toasts. Domain UI (forms, tables, dialogs, modals) is left to the consumer.
+The package owns the **scaffolding** — page shell, top bar, sidebar, menus, cards, buttons, typography, toasts — plus the **common broadly-reusable overlays and inputs** that nearly every app re-invents: modals (`OModal`/`OConfirmModal`), a slide-over drawer (`ODrawer`), tabs (`OTabs`), a decoupled async search-select (`OAsyncSelect`) and detail lists (`ODetailList`). What stays with the consumer is **app-specific** UI: data tables, bespoke multi-field forms, and domain widgets. Rule of thumb — if it's generic enough that ten apps would build the same thing, it belongs here; if it encodes your domain or backend shape, keep it local.
 
 ---
 
@@ -144,6 +144,21 @@ import { Link } from '@inertiajs/vue3'; // or RouterLink / 'a'
 | `<ODropdown>` | Click-to-open popover menu (user menu, action menu, …) | `placement` ('bottom-end' default), `open` (v-model), `offset`, `closeOnItemClick`, `minWidth` |
 | `<OCardGrid>` | Mobile-first responsive grid | `cols` (`{base,sm,md,lg,xl}`), `gap` |
 | `<OCardLink>` | Clickable card with icon + body + cta | `href`, `as`, `accent`, `focused`, `emoji`, `external` |
+| `<OTabs>` | Underline tab switcher (`v-model`); ARIA tablist + ←/→ nav | `tabs` (`{key,label,badge?,disabled?}[]`), `modelValue`, `size`, `accent` |
+
+### Overlays
+
+| Component | Purpose | Key props |
+| --- | --- | --- |
+| `<OModal>` | Centered dialog — teleports, scroll-locks, Escape/backdrop dismiss, focus-return; `#header`/default/`#footer` slots | `open`, `title`, `eyebrow`, `size` ('sm'..'xl'), `persistent`, `hideClose`, `accent`; emits `close` |
+| `<OConfirmModal>` | Yes/no confirm dialog built on `OModal` | `open`, `title`, `message`, `confirmLabel`, `cancelLabel`, `danger`, `loading`, `accent`; emits `confirm`/`cancel` |
+| `<ODrawer>` | Right/left slide-over panel (same overlay mechanics as OModal) | `open`, `title`, `eyebrow`, `width`, `side` ('right'\|'left'), `persistent`, `accent`; `#header`/default/`#footer` slots; emits `close` |
+
+### Forms
+
+| Component | Purpose | Key props |
+| --- | --- | --- |
+| `<OAsyncSelect>` | Debounced async search-select; HTTP-client-agnostic via a `fetcher` prop; `v-model` binds the value | `modelValue`, `fetcher` (`(q)=>Promise<{value,label}[]>`), `selectedLabel`, `placeholder`, `minChars`, `debounceMs`, `disabled`, `accent`; emits `update:modelValue`/`change` |
 
 ### Data & status
 
@@ -151,6 +166,7 @@ import { Link } from '@inertiajs/vue3'; // or RouterLink / 'a'
 | --- | --- | --- |
 | `<OEmptyState>` | "Nothing here yet" placeholder for empty lists / search results | `title`, `description`, `action`, `accent`; emits `action`; `icon` slot |
 | `<OScoreCard>` | KPI card — big number + label + optional trend delta | `label`, `value`, `trend`, `color`, `accent`; `footer` slot |
+| `<ODetailList>` | Label/value detail rows (semantic `<dl>`); `#value` scoped slot for rich values | `items` (`{label,value?}[]`), `stacked` |
 | `<OPriorityBadge>` | Dot + label for priority levels (`low`/`medium`/`high`/`critical`) | `priority`, `label` |
 | `<OStatusBadge>` | Maps a status string (e.g. `in_progress`, `paused`, `resolved`) to a semantic OBadge variant | `status`, `size`, `mapping` |
 
@@ -475,6 +491,6 @@ own by re-declaring the token surface under a `.opus-<name>` /
 1. Start from one of the §5 patterns.
 2. Pick an accent that reflects the page's purpose (calm pages: indigo `#6366f1` or cyan `#22d3ee`; alert pages: danger token).
 3. Compose with the catalogue components — don't re-implement primitives.
-4. If you need something not in the catalogue (form input, dialog, table), build it as a regular Vue component in the consumer project but follow the same conventions: read CSS variables, stick to the radii / typography tokens, use `OButton` / `OCard` as building blocks.
+4. Reach for the catalogue first: dialogs → `OModal` / `OConfirmModal`, slide-overs → `ODrawer`, tabbed views → `OTabs`, async pickers → `OAsyncSelect`, read-only field lists → `ODetailList`. Only build a **new** component in the consumer project when it's genuinely app-specific (a data table, a bespoke multi-field form, a domain widget) — and then follow the same conventions: read CSS variables, stick to the radii / typography tokens, use `OButton` / `OCard` / `OModal` as building blocks. If what you're building is generic enough that other apps would want it, add it here instead.
 
 If something feels missing from the catalogue, ask the user before reinventing — opus-ui is small on purpose, and the right answer is often to extend it.

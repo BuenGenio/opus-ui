@@ -2,8 +2,8 @@
 
 > Re-usable Vue 3 + Tailwind UI scaffolding — page shells, cards, menus, buttons, typography — extracted from [OpusOS](https://opus.anthill.hk). Drop into any Laravel + Inertia or plain Vue/Vite project.
 
-- **14 components** that compose into the OpusOS look-and-feel
-- **Themeable via CSS variables** — no fights with Tailwind specificity
+- **27 components** that compose into the OpusOS look-and-feel — scaffolding, overlays (modal/drawer/confirm), tabs, an async select and detail lists
+- **Themeable via CSS variables** — 4 built-in themes (dark/light/midnight/emerald) via class *or* `data-theme`, no fights with Tailwind specificity
 - **Smart-TV friendly** — D-pad input composable + non-broken styles on Tizen / webOS
 - **Plug-and-play with Claude Code** — ships a [`CLAUDE.md`](./CLAUDE.md) so agents pick up your project's conventions automatically
 - **TypeScript-first**, source-only ESM, no build step in the consumer
@@ -72,14 +72,14 @@ That's the whole API — pick a page pattern, drop in components.
 
 ## Components
 
-| Layout | Primitives | Navigation | Data & status | Notifications |
-| --- | --- | --- | --- | --- |
-| `OPageShell` (outer) | `OCard` | `OMenu` (v / h) | `OEmptyState` | `OToastViewport` |
-| `OPageScaffold` (inner) | `OButton` | `OMenuItem` | `OScoreCard` | `useToast()` |
-| `OTopBar` | `OHeading` | `ODropdown` | `OPriorityBadge` | |
-| `OSidebar` | `OText` | `OCardGrid` | `OStatusBadge` | |
-| | `OBadge` | `OCardLink` | | |
-| | `ODivider` | | | |
+| Layout | Primitives | Navigation | Overlays & forms | Data & status | Notifications |
+| --- | --- | --- | --- | --- | --- |
+| `OPageShell` (outer) | `OCard` | `OMenu` (v / h) | `OModal` | `OEmptyState` | `OToastViewport` |
+| `OPageScaffold` (inner) | `OButton` | `OMenuItem` | `OConfirmModal` | `OScoreCard` | `useToast()` |
+| `OTopBar` | `OHeading` | `ODropdown` | `ODrawer` | `ODetailList` | |
+| `OSidebar` | `OText` | `OCardGrid` | `OAsyncSelect` | `OPriorityBadge` | |
+| | `OBadge` | `OCardLink` | | `OStatusBadge` | |
+| | `ODivider` | `OTabs` | | | |
 
 Composables: `useTvRemote()` (Smart-TV / D-pad input), `useToast()` (notifications).
 
@@ -99,8 +99,9 @@ Every visual choice reads from a CSS variable. Override globally on `:root`, per
   --opus-font: 'Inter', sans-serif;
 }
 
-/* dark / light is built-in: */
-body.opus-light { /* tokens auto-swap */ }
+/* 4 built-in themes — apply by class OR data-theme, tokens auto-swap: */
+body.opus-light { /* … */ }        /* also: .opus-midnight, .opus-emerald */
+html[data-theme="midnight"] { /* … same overrides, attribute convention */ }
 ```
 
 ```vue
