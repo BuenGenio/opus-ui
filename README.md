@@ -81,6 +81,8 @@ That's the whole API — pick a page pattern, drop in components.
 | | `OBadge` | `OCardLink` | | `OStatusBadge` | |
 | | `ODivider` | `OTabs` | | | |
 
+**Forms** (v0.1.5+): `OField` · `OInput` · `OTextarea` · `OSelect` · `OCheckbox` — token-driven form controls with `v-model`.
+
 Composables: `useTvRemote()` (Smart-TV / D-pad input), `useToast()` (notifications).
 
 The full catalogue with props, examples and patterns is in [**CLAUDE.md**](./CLAUDE.md) — written for both humans and AI agents.

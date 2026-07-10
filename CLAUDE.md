@@ -16,7 +16,7 @@ A small set of Vue 3 + Tailwind-compatible components that compose into the Opus
 
 Everything is themeable via CSS variables (see §6 Theming). Nothing forces Tailwind on you — components use scoped CSS internally — but a `tailwind-preset` is shipped so consumers can layer utility classes on top.
 
-The package owns the **scaffolding** — page shell, top bar, sidebar, menus, cards, buttons, typography, toasts — plus the **common broadly-reusable overlays and inputs** that nearly every app re-invents: modals (`OModal`/`OConfirmModal`), a slide-over drawer (`ODrawer`), tabs (`OTabs`), a decoupled async search-select (`OAsyncSelect`) and detail lists (`ODetailList`). What stays with the consumer is **app-specific** UI: data tables, bespoke multi-field forms, and domain widgets. Rule of thumb — if it's generic enough that ten apps would build the same thing, it belongs here; if it encodes your domain or backend shape, keep it local.
+The package owns the **scaffolding** — page shell, top bar, sidebar, menus, cards, buttons, typography, toasts — plus the **common broadly-reusable overlays and inputs** that nearly every app re-invents: modals (`OModal`/`OConfirmModal`), a slide-over drawer (`ODrawer`), tabs (`OTabs`), a decoupled async search-select (`OAsyncSelect`), detail lists (`ODetailList`) and basic **form controls** (`OInput`/`OTextarea`/`OSelect`/`OCheckbox`/`OField`). What stays with the consumer is **app-specific** UI: data tables, bespoke multi-field forms, and domain widgets. Rule of thumb — if it's generic enough that ten apps would build the same thing, it belongs here; if it encodes your domain or backend shape, keep it local.
 
 ---
 
@@ -159,6 +159,11 @@ import { Link } from '@inertiajs/vue3'; // or RouterLink / 'a'
 | Component | Purpose | Key props |
 | --- | --- | --- |
 | `<OAsyncSelect>` | Debounced async search-select; HTTP-client-agnostic via a `fetcher` prop; `v-model` binds the value | `modelValue`, `fetcher` (`(q)=>Promise<{value,label}[]>`), `selectedLabel`, `placeholder`, `minChars`, `debounceMs`, `disabled`, `accent`; emits `update:modelValue`/`change` |
+| `<OField>` | Label + hint + error wrapper around any control | `label`, `hint`, `error`, `required` |
+| `<OInput>` | Text input (text/email/number/password/…) | `modelValue` (v-model), `type`, `size`, `placeholder`, `disabled`, `readonly`, `invalid`, `accent` |
+| `<OTextarea>` | Multi-line text input | `modelValue` (v-model), `rows`, `size`, `invalid`, `disabled` |
+| `<OSelect>` | Native `<select>`, styled (options via default slot) | `modelValue` (v-model), `size`, `invalid`, `disabled` |
+| `<OCheckbox>` | Checkbox + optional inline label slot | `modelValue` (v-model boolean), `disabled`, `accent` |
 
 ### Data & status
 
