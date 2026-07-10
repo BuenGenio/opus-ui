@@ -38,7 +38,18 @@ const props = withDefaults(
     },
 );
 
-defineEmits<{ click: [MouseEvent] }>();
+const emit = defineEmits<{ click: [MouseEvent] }>();
+
+// Declaring `click` in emits removes it from attribute fallthrough, so the
+// native click must be forwarded explicitly (and suppressed while disabled).
+function onClick(e: MouseEvent) {
+    if (props.disabled || props.loading) {
+        e.preventDefault();
+        e.stopPropagation();
+        return;
+    }
+    emit('click', e);
+}
 
 const el = ref<HTMLElement | null>(null);
 watch(
@@ -75,6 +86,7 @@ const isNativeButton = renderedAs === 'button';
             },
         ]"
         :style="accent ? { '--ou-accent': accent } : undefined"
+        @click="onClick"
     >
         <span v-if="loading" class="ou-btn__spinner" aria-hidden="true" />
         <span class="ou-btn__label"><slot /></span>
